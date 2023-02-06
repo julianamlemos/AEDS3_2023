@@ -1,0 +1,80 @@
+base_maze = """
+#############
+#       #   #
+# ##### ### #
+#     #     #
+# ### # #####
+#     #    ##
+### ###### ##
+###     ## ##
+# ### #### ##
+# ### #### ##
+#   # #     #
+### # # #####
+#     #     S
+#############"
+"""
+
+NORTE      = 0
+LESTE      = 1
+SUL        = 2
+OESTE      = 3
+SEM_SAIDA  = 4
+
+move = {
+   NORTE:  lambda (x, y): (x,   y-1),
+   LESTE:  lambda (x, y): (x+1, y),
+   SUL:    lambda (x, y): (x,   y+1),
+   OESTE:  lambda (x, y): (x-1, y)
+}
+
+def step(maze, pos):
+   """ Take a single (recursive) step"""
+   #show(curr_maze) # uncomment this to see step-by-step
+   px, py = pos
+   found = False
+   dir = NORTH[E
+   turn = 1
+   maze[px][py] = '.' # take a step
+   while not found and dir!=SEM_SAIDA:
+       found = find_path(maze, pos = move[dir](pos))
+       dir += turn
+   if not found:
+       maze[px][py]=' '
+   return found
+
+decide = {
+   'S': lambda m, p: True,
+   '#': lambda m, p: False,
+   '.': lambda m, p: False,
+   ' ': step
+}
+
+def find_path(maze, pos=(1,1)):
+   """ Decide where to go or to give it up."""
+   px, py = pos
+   if px<0 or px>len(maze[0]) or  py<0 or py>len(maze):
+       print px, py, maze[0]
+       return 0
+   here = maze[px][py]
+   return decide[here](maze, pos)
+
+def convert_maze(txt_maze):
+   """Convert multi-line text maze into list-of-list maze"""
+   list_maze = []
+   for line in txt_maze.split('\n')[1:-1]:
+       list_maze.append([i for i in line])
+   return list_maze
+
+def show(maze):
+   """Pretty-print maze"""
+   print
+   for line in maze:
+       print ''.join(line)
+
+if __name__=="__main__":
+   curr_maze = convert_maze(base_maze)
+   if find_path(curr_maze,pos=(8,1)):
+       show(curr_maze)
+   else:
+       print "MARAVILHA! Me perdi."
