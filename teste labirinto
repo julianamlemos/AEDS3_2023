@@ -26,16 +26,29 @@ def ler_arquivo(arquivo):
                 grafo[vertice] = vizinhos
     return grafo
 #busca em profundidade
-def dfs(grafo, vertice_inicial, vertice_final):
-    pilha = [vertice_inicial]
+import time
+
+def dfs(grafo, vertice_inicial, vertice_final, caminho=[]):
+    pilha = [(vertice_inicial, caminho)]
     visitados = set()
     while pilha:
-        vertice = pilha.pop()
+        vertice, caminho = pilha.pop()
         if vertice in visitados:
             continue
         visitados.add(vertice)
+        caminho = caminho + [vertice]
         if vertice == vertice_final:
-            return True
+            return caminho
         for vizinho in grafo[vertice]:
-            pilha.append(vizinho)
-    return False
+            pilha.append((vizinho, caminho))
+    return None
+
+inicio = time.time()
+caminho = dfs(grafo, vertice_inicial, vertice_final)
+fim = time.time()
+
+if caminho is None:
+    print("Não foi possível encontrar uma saída")
+else:
+    print("Caminho encontrado:", caminho)
+    print("Tempo gasto:", fim - inicio, "segundos")
