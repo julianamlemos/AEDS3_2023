@@ -8,19 +8,11 @@ class Graph:
         if adj_list == []:
             for _ in range(len(self.nodes)):
                 self.adj_list.append([])
-        for no in self.nodes:
-            noX, noY = no.pos
-        if no.tipo != '#':
-            for neighbor in self.nodes:
-                neighborX, neighborY = neighbor.pos
-                if noX - 1 == neighborX and noY == neighborY and neighbor.tipo != '#':
-                    no.vizinhos.append(neighbor)
-                if noX + 1 == neighborX and noY == neighborY and neighbor.tipo != '#':
-                    no.vizinhos.append(neighbor)
-                if noX == neighborX and noY - 1 == neighborY and neighbor.tipo != '#':
-                    no.vizinhos.append(neighbor)
-                if noX == neighborX and noY + 1 == neighborY and neighbor.tipo != '#':
-                    no.vizinhos.append(neighbor)
+        for i in range(len(self.nodes)):
+                for j in range(len(self.nodes)):
+                    if self.nodes[j] in self.nodes[i].vizinhos:
+                        self.adj_list[i].append(self.nodes[j])
+
   
 def convert_maze_in_graph(mat):
     nodes = []
@@ -30,4 +22,17 @@ def convert_maze_in_graph(mat):
             nodeAux.pos = j,i
             nodeAux.tipo = mat[j][i]
             nodes.append(nodeAux)
+        for no in nodes:
+            noX, noY = no.pos
+            if no.tipo != '#':
+                for neighbor in nodes:
+                    neighborX, neighborY = neighbor.pos
+                    if noX - 1 == neighborX and noY == neighborY and neighbor.tipo != '#':
+                        no.vizinhos.append(neighbor)
+                    elif noX + 1 == neighborX and noY == neighborY and neighbor.tipo != '#':
+                        no.vizinhos.append(neighbor)
+                    elif noX == neighborX and noY - 1 == neighborY and neighbor.tipo != '#':
+                        no.vizinhos.append(neighbor)
+                    elif noX == neighborX and noY + 1 == neighborY and neighbor.tipo != '#':
+                        no.vizinhos.append(neighbor)
     return nodes
