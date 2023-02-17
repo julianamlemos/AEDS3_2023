@@ -10,5 +10,3 @@ def print_maze(maze):
    print
    for line in maze:
        print(''.join(line))
-
-

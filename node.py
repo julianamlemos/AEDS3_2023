@@ -8,4 +8,3 @@ class Node:
         self.tipo = None
         self.vizinhos = []
         self.desc = 0
-

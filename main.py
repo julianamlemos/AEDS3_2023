@@ -1,5 +1,5 @@
 import time
-from node import*
+from node import Node
 from maze import* 
 from graph import*
 
@@ -16,16 +16,16 @@ else:
     file = open(nameFile, "r")
     mat_maze = convert_maze(file)
     nodes: Node = convert_maze_in_graph(mat_maze)
-    #print(mat_maze)
-    #print_maze(mat_maze)
-    g1 = Graph(nodes, adj_list=[])
+    #print(mat_maze) #descomentar para imprimir matriz de caracteres
+    #print_maze(mat_maze) # descomentar para imprimir labirinto
+    g1 = Graph(nodes)
     entrada = g1.no_entrada()
-    saida = g1.no_saida()
-    caminho = g1.dfs(entrada=entrada, saida=saida)
+    caminho = g1.dfs(entrada=entrada)
+
+    print("Caminho: ", end="")
     print_pos(caminho)
 
     file.close
 
 tempo_final = (time.time()) 
-print("Tempo: " , tempo_final - tempo_inicial)
-#maze\toy.txt
+print("\nTempo: " , tempo_final - tempo_inicial)
